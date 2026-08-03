@@ -2,9 +2,6 @@
 
 > Production-ready, multi-agent AI healthcare platform providing evidence-grounded clinical consultation, lab report analysis, RAG-backed medical intelligence, and personal health operating workflows aligned with WHO, CDC, NHS, and NIH guidelines.
 
----
-
----
 
 ## 📌 Overview
 
@@ -20,9 +17,6 @@ The system is built on a **Grounding & Safety First** architecture: rather than 
   <img src="report/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
 </p>
 
----
-
----
 
 
 ## ✨ Key Features
