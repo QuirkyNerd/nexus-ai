@@ -8,14 +8,14 @@
 
 NexusAI is an agentic AI medical platform designed to bridge the gap between complex medical literature and patient-facing healthcare management. It processes text queries, lab test PDFs, and diagnostic images to deliver instant, multi-stage clinical guidance.
 
-The system is built on a **Grounding & Safety First** architecture: rather than relying on a single black-box LLM, NexusAI combines a zero-latency query router, vector-retrieval RAG over clinical medical literature, a live NCBI/PubMed fallback verification engine, structured lab report parsers, and a local-first offline health storage engine.
+The system is built on a Grounding & Safety First architecture: rather than relying on a single black-box LLM, NexusAI combines a zero-latency query router, vector-retrieval RAG over clinical medical literature, a live NCBI/PubMed fallback verification engine, structured lab report parsers, and a local-first offline health storage engine.
 
 ---
 
 ## 🏗️ System Architecture
 
 <p align="center">
-  <img src="report/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
+  <img src="assets/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
 </p>
 
 ---
@@ -179,6 +179,19 @@ All backend API routes are prefixed with `/api/`.
 | [`docker-compose.yml`](file:///d:/Downloads/medical-bot-main/medical-bot-main/docker-compose.yml) | Multi-container Docker configuration for backend server and PostgreSQL data volumes |
 
 ---
+---
+## 📸 Screenshots
+
+<p align="center">
+  <img src="assets/Screenshot-1.png" alt="Screenshot 1" width="1000"/>
+</p>
+
+<br>
+
+<p align="center">
+  <img src="assets/Screenshot-2.png" alt="Screenshot 2" width="1000"/>
+</p>
+
 
 ## Medical Disclaimer
 
