@@ -1,4 +1,4 @@
-# NexusAI — AI Medical chatbot & Personal Health Operating System
+# NexusAI — Multi-Agent Clinical Intelligence & Personal Health Platform
 
 > Production-ready, multi-agent AI healthcare platform providing evidence-grounded clinical consultation, lab report analysis, RAG-backed medical intelligence, and personal health operating workflows aligned with WHO, CDC, NHS, and NIH guidelines.
 
@@ -111,7 +111,7 @@ git clone https://github.com/ruslanmv/ai-medical-chatbot.git
 cd medical-bot-main
 ```
 
-### 2. Run via Docker Compose (Recommended)
+### 2. Run via Docker Compose
 ```bash
 docker-compose up --build
 ```
@@ -240,9 +240,6 @@ All backend API routes are prefixed with `/api/`.
 | [`docker-compose.yml`](file:///d:/Downloads/medical-bot-main/medical-bot-main/docker-compose.yml) | Multi-container Docker configuration for backend server and PostgreSQL data volumes |
 
 ---
-
-```
-
 ---
 
 ## ⚠️ Medical Disclaimer
@@ -258,3 +255,5 @@ It is not a substitute for professional medical advice, diagnosis, or treatment.
 This project is developed for academic and research demonstration purposes under the MIT License.
 
 © 2026 NexusAI
+
+---
