@@ -1,25 +1,16 @@
-# 🏥 NexusAI — AI Medical chatbot & Personal Health Operating System
+# NexusAI — AI Medical chatbot & Personal Health Operating System
 
 > Production-ready, multi-agent AI healthcare platform providing evidence-grounded clinical consultation, lab report analysis, RAG-backed medical intelligence, and personal health operating workflows aligned with WHO, CDC, NHS, and NIH guidelines.
 
 ---
 
-## 🚀 Deployment & Live Endpoints
-
-| Service | Access Endpoint / Location | Description |
-|---|---|---|
-| **Production Web UI** | `https://medical-bot-mu.vercel.app` | Next.js 14 PWA frontend deployed on Vercel |
-| **FastAPI Backend API** | `http://localhost:8000` | Multi-agent Python API service |
-| **API Documentation** | `http://localhost:8000/docs` | Interactive Swagger / OpenAPI documentation |
-| **Container Service** | `docker-compose up --build` | Dockerized backend and data volumes |
-
 ---
 
 ## 📌 Overview
 
-** NexusAI** is an agentic AI medical platform designed to bridge the gap between complex medical literature and patient-facing healthcare management. It processes text queries, lab test PDFs, and diagnostic images to deliver instant, multi-stage clinical guidance.
+NexusAI is an agentic AI medical platform designed to bridge the gap between complex medical literature and patient-facing healthcare management. It processes text queries, lab test PDFs, and diagnostic images to deliver instant, multi-stage clinical guidance.
 
-The system is built on a **Grounding & Safety First** architecture: rather than relying on a single black-box LLM, MedOS combines a zero-latency query router, vector-retrieval RAG over clinical medical literature, a live NCBI/PubMed fallback verification engine, structured lab report parsers, and a local-first offline health storage engine.
+The system is built on a **Grounding & Safety First** architecture: rather than relying on a single black-box LLM, NexusAI combines a zero-latency query router, vector-retrieval RAG over clinical medical literature, a live NCBI/PubMed fallback verification engine, structured lab report parsers, and a local-first offline health storage engine.
 
 ```
        WHO / CDC / NHS / NIH Grounded Medical Knowledge Scaffold
@@ -104,15 +95,6 @@ sequenceDiagram
 | **Containerized Deployment** | Docker & Docker Compose setup supported by a production Makefile using the modern `uv` Python package manager |
 
 ---
-
-## 👥 Role-Based Access Control
-
-| Role | Responsibilities & Capabilities |
-|---|---|
-| **Patient / User** | Chat with AI, upload lab reports/images, track vitals, manage medication schedules, export health summary |
-| **Medical Coder / Clinician** | Review AI clinical rationale, cross-reference RAG evidence snippets, inspect lab parameter extractions |
-| **Administrator** | Manage registered users, inspect vector database status, configure environment keys, review system logs |
-
 ---
 
 ## ⚡ Quick Start
@@ -129,32 +111,12 @@ git clone https://github.com/ruslanmv/ai-medical-chatbot.git
 cd medical-bot-main
 ```
 
-### 2. Environment Configuration
-Create a `.env` file in `backend/`:
-```env
-PORT=8000
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/medai_db
-SUPABASE_URL=https://your-supabase-project.supabase.co
-SUPABASE_KEY=your-supabase-anon-key
-HF_API_KEY=your_huggingface_api_key
-GROQ_API_KEY=your_groq_api_key
-JWT_SECRET=your_super_secret_jwt_key
-SMTP_EMAIL=your_email@gmail.com
-SMTP_PASSWORD=your_app_password
-```
-
-Create a `.env.local` file in `web/`:
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-GROQ_API_KEY=your_groq_api_key
-```
-
-### 3. Run via Docker Compose (Recommended)
+### 2. Run via Docker Compose (Recommended)
 ```bash
 docker-compose up --build
 ```
 
-### 4. Manual Local Setup
+### 3. Manual Local Setup
 
 #### Backend Setup
 ```bash
@@ -162,7 +124,7 @@ cd backend
 uv pip install -r requirements.txt
 python main.py
 ```
-*Backend runs at: `http://localhost:8000` (API Docs at `http://localhost:8000/docs`)*
+*Backend runs at: `http://localhost:8000`*
 
 #### Frontend Setup
 ```bash
@@ -228,61 +190,11 @@ Implemented in [`backend/agents/confidence_agent.py`](file:///d:/Downloads/medic
 
 ---
 
-## 🗄️ Database Architecture
-
-The backend utilizes PostgreSQL with SQLAlchemy Core in [`backend/database.py`](file:///d:/Downloads/medical-bot-main/medical-bot-main/backend/database.py).
-
-```sql
--- Core User & Auth Tables
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name TEXT,
-    email TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
-    role TEXT NOT NULL DEFAULT 'user',
-    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE password_reset_tokens (
-    id SERIAL PRIMARY KEY,
-    email TEXT NOT NULL,
-    otp_code TEXT NOT NULL,
-    expires_at TIMESTAMP NOT NULL,
-    is_used BOOLEAN DEFAULT FALSE
-);
-
--- Conversation History Tables
-CREATE TABLE conversations (
-    id TEXT PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    title TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE messages (
-    id SERIAL PRIMARY KEY,
-    conversation_id TEXT REFERENCES conversations(id) ON DELETE CASCADE,
-    role TEXT CHECK(role IN ('user','assistant')),
-    content TEXT NOT NULL,
-    metadata TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Health OS Subsystem Tables
-CREATE TABLE medication_schedules ( id TEXT PRIMARY KEY, user_id INTEGER REFERENCES users(id), medication_name TEXT NOT NULL, dosage TEXT NOT NULL, time TEXT NOT NULL, status TEXT DEFAULT 'pending' );
-CREATE TABLE health_vitals ( id TEXT PRIMARY KEY, user_id INTEGER REFERENCES users(id), type TEXT NOT NULL, value TEXT NOT NULL, unit TEXT NOT NULL, timestamp TIMESTAMP NOT NULL );
-CREATE TABLE health_records ( id TEXT PRIMARY KEY, user_id INTEGER REFERENCES users(id), title TEXT NOT NULL, type TEXT NOT NULL, date TIMESTAMP NOT NULL, provider TEXT );
-CREATE TABLE health_medicines ( id TEXT PRIMARY KEY, user_id INTEGER REFERENCES users(id), name TEXT NOT NULL, dose TEXT NOT NULL, form TEXT NOT NULL, quantity INTEGER NOT NULL );
-CREATE TABLE health_contacts ( id TEXT PRIMARY KEY, user_id INTEGER REFERENCES users(id), name TEXT NOT NULL, role TEXT NOT NULL, phone TEXT, email TEXT );
-CREATE TABLE ehr_profiles ( id TEXT PRIMARY KEY, user_id INTEGER REFERENCES users(id), data TEXT NOT NULL );
-```
-
 ---
 
 ## 🌐 Multilingual & Grounding Knowledge Scaffold
 
-MedOS injects a structured clinical knowledge scaffold into every system prompt (`lib/medical-knowledge.ts`), grounding answers in standard medical bodies:
+NexusAI injects a structured clinical knowledge scaffold into every system prompt (`lib/medical-knowledge.ts`), grounding answers in standard medical bodies:
 - **WHO** (World Health Organization)
 - **CDC** (Centers for Disease Control and Prevention)
 - **NHS** (National Health Service)
@@ -321,7 +233,7 @@ All backend API routes are prefixed with `/api/`.
 | [`backend/agents/router_agent.py`](file:///d:/Downloads/medical-bot-main/medical-bot-main/backend/agents/router_agent.py) | Signal-based intent classifier mapping queries to canonical medical intents |
 | [`backend/agents/confidence_agent.py`](file:///d:/Downloads/medical-bot-main/medical-bot-main/backend/agents/confidence_agent.py) | Confidence scoring agent & live NCBI/PubMed web retrieval fallback handler |
 | [`backend/api/groq_client.py`](file:///d:/Downloads/medical-bot-main/medical-bot-main/backend/api/groq_client.py) | Groq Cloud API wrapper for `llama-3.3-70b-versatile` with automatic model fallback |
-| [`web/components/MedOSApp.tsx`](file:///d:/Downloads/medical-bot-main/medical-bot-main/web/components/MedOSApp.tsx) | Main React client application shell with tab-based view switching |
+| [`web/components/NexusAIApp.tsx`](file:///d:/Downloads/medical-bot-main/medical-bot-main/web/components/NexusAIApp.tsx) | Main React client application shell with tab-based view switching |
 | [`web/lib/health-store.ts`](file:///d:/Downloads/medical-bot-main/medical-bot-main/web/lib/health-store.ts) | Local-first offline health storage engine managing vitals, records, and JSON exports |
 | [`web/lib/api-client.ts`](file:///d:/Downloads/medical-bot-main/medical-bot-main/web/lib/api-client.ts) | Shared API client with authorization header injection and normalized error handling |
 | [`Makefile`](file:///d:/Downloads/medical-bot-main/medical-bot-main/Makefile) | Enterprise Makefile providing `install`, `test`, `lint`, `format`, `check`, and `docker` targets |
@@ -329,19 +241,6 @@ All backend API routes are prefixed with `/api/`.
 
 ---
 
-## 🛠️ DevOps & Development Commands
-
-This repository includes a production-grade `Makefile` for streamlined development workflows:
-
-```bash
-make install       # Install production dependencies using uv
-make install-dev   # Install development and testing dependencies
-make format        # Format Python code using black and isort
-make lint          # Run static code analysis with flake8 and pylint
-make test          # Run complete Pytest suite
-make test-unit     # Run unit tests only
-make test-cov      # Generate HTML code coverage report
-make check         # Run format, lint, and type checks in sequence
 ```
 
 ---
@@ -356,4 +255,6 @@ It is not a substitute for professional medical advice, diagnosis, or treatment.
 
 ## 📄 License
 
-Distributed under the **Apache-2.0 License**. See `LICENSE` for more information.
+This project is developed for academic and research demonstration purposes under the MIT License.
+
+© 2026 NexusAI
