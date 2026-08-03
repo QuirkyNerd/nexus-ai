@@ -4,79 +4,19 @@
 
 ---
 
----
-
 ## 📌 Overview
 
 NexusAI is an agentic AI medical platform designed to bridge the gap between complex medical literature and patient-facing healthcare management. It processes text queries, lab test PDFs, and diagnostic images to deliver instant, multi-stage clinical guidance.
 
 The system is built on a **Grounding & Safety First** architecture: rather than relying on a single black-box LLM, NexusAI combines a zero-latency query router, vector-retrieval RAG over clinical medical literature, a live NCBI/PubMed fallback verification engine, structured lab report parsers, and a local-first offline health storage engine.
 
-```
-       WHO / CDC / NHS / NIH Grounded Medical Knowledge Scaffold
-                                   │
-                                   ▼
- [User Input] ──► [Router Agent] ──┬──► [RAG Vector Search (Supabase pgvector)]
-                                   ├──► [Report Agent (Lab PDF Parser)]
-                                   ├──► [Image Agent (Diagnostic Scan Guidance)]
-                                   └──► [Confidence Agent (NCBI PubMed Fallback)]
-                                   │
-                                   ▼
-                 [Groq Llama 3.3 70B Clinical Inference]
-                                   │
-                                   ▼
-             [Structured Guidance + Confidence Grounding Badge]
-```
-
 ---
 
 ## 🏗️ System Architecture
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Patient / Clinician
-    participant UI as Next.js 14 Frontend
-    participant LocalStore as HealthStore (LocalStorage)
-    participant Proxy as Vercel API Gateway
-    participant API as FastAPI Backend (/api/agent/chat)
-    participant Router as RouterAgent
-    participant RAG as Supabase pgvector RAG
-    participant NCBI as NCBI / PubMed API
-    participant Groq as Groq LLM (Llama 3.3 70B)
-    participant Conf as ConfidenceAgent
-    participant DB as PostgreSQL DB
-
-    User->>UI: Submit query / Upload lab PDF or image
-    UI->>LocalStore: Synchronize health context & profile
-    UI->>Proxy: POST /api/agent/chat (Bearer Token)
-    Proxy->>API: Forward request payload
-    API->>Router: classify(query, has_image, has_report)
-    Router-->>API: Intent (MEDICAL_QUESTION / REPORT_ANALYSIS / IMAGE_DIAGNOSIS)
-    
-    alt Intent == MEDICAL_QUESTION
-        API->>RAG: search(query_vector, top_k=5)
-        RAG-->>API: Clinical snippets (pgvector similarity score)
-        
-        alt RAG Similarity Score < 0.45 (Low Confidence)
-            API->>NCBI: Live PubMed E-utilities search query
-            NCBI-->>API: Top 3 recent abstract snippets
-        end
-        
-        API->>Groq: Generate grounded response (Llama 3.3 70B)
-        Groq-->>API: Structured Markdown response
-        API->>Conf: Evaluate response & assign confidence badge
-        Conf-->>API: Badge (🟢 High / 🟡 Moderate / 🔴 External PubMed)
-    else Intent == REPORT_ANALYSIS
-        API->>Groq: Extract & analyze lab parameters
-        Groq-->>API: Structured report breakdown & recommendations
-    end
-
-    API->>DB: Persist conversation & messages
-    API-->>Proxy: Return final response payload + metadata
-    Proxy-->>UI: Render response + confidence badge + follow-up chips
-    UI-->>User: Display clinical guidance & update dashboard
-```
+<p align="center">
+  <img src="report/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
+</p>
 
 ---
 
@@ -94,7 +34,6 @@ sequenceDiagram
 | **Secure PostgreSQL Auth** | JWT session authentication with `bcrypt` password hashing, role management, and SMTP OTP email recovery |
 | **Containerized Deployment** | Docker & Docker Compose setup supported by a production Makefile using the modern `uv` Python package manager |
 
----
 ---
 
 ## ⚡ Quick Start
@@ -239,7 +178,6 @@ All backend API routes are prefixed with `/api/`.
 | [`Makefile`](file:///d:/Downloads/medical-bot-main/medical-bot-main/Makefile) | Enterprise Makefile providing `install`, `test`, `lint`, `format`, `check`, and `docker` targets |
 | [`docker-compose.yml`](file:///d:/Downloads/medical-bot-main/medical-bot-main/docker-compose.yml) | Multi-container Docker configuration for backend server and PostgreSQL data volumes |
 
----
 ---
 
 ## ⚠️ Medical Disclaimer
