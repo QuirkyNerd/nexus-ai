@@ -12,21 +12,15 @@ NexusAI is an agentic AI medical platform designed to bridge the gap between com
 
 The system is built on a **Grounding & Safety First** architecture: rather than relying on a single black-box LLM, NexusAI combines a zero-latency query router, vector-retrieval RAG over clinical medical literature, a live NCBI/PubMed fallback verification engine, structured lab report parsers, and a local-first offline health storage engine.
 
-```
-       WHO / CDC / NHS / NIH Grounded Medical Knowledge Scaffold
-                                   │
-                                   ▼
- [User Input] ──► [Router Agent] ──┬──► [RAG Vector Search (Supabase pgvector)]
-                                   ├──► [Report Agent (Lab PDF Parser)]
-                                   ├──► [Image Agent (Diagnostic Scan Guidance)]
-                                   └──► [Confidence Agent (NCBI PubMed Fallback)]
-                                   │
-                                   ▼
-                 [Groq Llama 3.3 70B Clinical Inference]
-                                   │
-                                   ▼
-             [Structured Guidance + Confidence Grounding Badge]
-```
+---
+
+## 🏗️ High-Level Architecture
+
+<p align="center">
+  <img src="report/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
+</p>
+
+---
 
 ---
 
