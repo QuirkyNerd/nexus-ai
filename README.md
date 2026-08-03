@@ -183,13 +183,13 @@ All backend API routes are prefixed with `/api/`.
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="assets/Screenshot-1.png" alt="Screenshot 1" width="1000"/>
+  <img src="assets/screenshot-1.png" alt="Screenshot 1" width="1000"/>
 </p>
 
 <br>
 
 <p align="center">
-  <img src="assets/Screenshot-2.png" alt="Screenshot 2" width="1000"/>
+  <img src="assets/screenshot-2.png" alt="Screenshot 2" width="1000"/>
 </p>
 
 
