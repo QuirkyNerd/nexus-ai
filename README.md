@@ -14,7 +14,7 @@ The system is built on a **Grounding & Safety First** architecture: rather than 
 
 ---
 
-## 🏗️ High-Level Architecture
+## 🏗️ System Architecture
 
 <p align="center">
   <img src="report/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
@@ -24,55 +24,6 @@ The system is built on a **Grounding & Safety First** architecture: rather than 
 
 ---
 
-## 🏗️ System Architecture
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Patient / Clinician
-    participant UI as Next.js 14 Frontend
-    participant LocalStore as HealthStore (LocalStorage)
-    participant Proxy as Vercel API Gateway
-    participant API as FastAPI Backend (/api/agent/chat)
-    participant Router as RouterAgent
-    participant RAG as Supabase pgvector RAG
-    participant NCBI as NCBI / PubMed API
-    participant Groq as Groq LLM (Llama 3.3 70B)
-    participant Conf as ConfidenceAgent
-    participant DB as PostgreSQL DB
-
-    User->>UI: Submit query / Upload lab PDF or image
-    UI->>LocalStore: Synchronize health context & profile
-    UI->>Proxy: POST /api/agent/chat (Bearer Token)
-    Proxy->>API: Forward request payload
-    API->>Router: classify(query, has_image, has_report)
-    Router-->>API: Intent (MEDICAL_QUESTION / REPORT_ANALYSIS / IMAGE_DIAGNOSIS)
-    
-    alt Intent == MEDICAL_QUESTION
-        API->>RAG: search(query_vector, top_k=5)
-        RAG-->>API: Clinical snippets (pgvector similarity score)
-        
-        alt RAG Similarity Score < 0.45 (Low Confidence)
-            API->>NCBI: Live PubMed E-utilities search query
-            NCBI-->>API: Top 3 recent abstract snippets
-        end
-        
-        API->>Groq: Generate grounded response (Llama 3.3 70B)
-        Groq-->>API: Structured Markdown response
-        API->>Conf: Evaluate response & assign confidence badge
-        Conf-->>API: Badge (🟢 High / 🟡 Moderate / 🔴 External PubMed)
-    else Intent == REPORT_ANALYSIS
-        API->>Groq: Extract & analyze lab parameters
-        Groq-->>API: Structured report breakdown & recommendations
-    end
-
-    API->>DB: Persist conversation & messages
-    API-->>Proxy: Return final response payload + metadata
-    Proxy-->>UI: Render response + confidence badge + follow-up chips
-    UI-->>User: Display clinical guidance & update dashboard
-```
-
----
 
 ## ✨ Key Features
 
