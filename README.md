@@ -131,7 +131,7 @@ Implemented in [`backend/agents/confidence_agent.py`](file:///d:/Downloads/medic
 
 ---
 
-## 🌐 Multilingual & Grounding Knowledge Scaffold
+## Multilingual & Grounding Knowledge Scaffold
 
 NexusAI injects a structured clinical knowledge scaffold into every system prompt (`lib/medical-knowledge.ts`), grounding answers in standard medical bodies:
 - **WHO** (World Health Organization)
@@ -144,7 +144,7 @@ The frontend localization engine [`web/lib/i18n.ts`](file:///d:/Downloads/medica
 
 ---
 
-## 🔌 API Architecture & Endpoints Summary
+## API Architecture & Endpoints Summary
 
 All backend API routes are prefixed with `/api/`.
 
@@ -180,7 +180,7 @@ All backend API routes are prefixed with `/api/`.
 
 ---
 
-## ⚠️ Medical Disclaimer
+## Medical Disclaimer
 
 **NexusAI is designed for informational, educational, and workflow support purposes only.** 
 
