@@ -2,6 +2,7 @@
 
 > Production-ready, multi-agent AI healthcare platform providing evidence-grounded clinical consultation, lab report analysis, RAG-backed medical intelligence, and personal health operating workflows aligned with WHO, CDC, NHS, and NIH guidelines.
 
+---
 
 ## 📌 Overview
 
@@ -17,7 +18,7 @@ The system is built on a **Grounding & Safety First** architecture: rather than 
   <img src="report/system%20architecture.png" alt="NexusAI System Architecture" width="1000"/>
 </p>
 
-
+---
 
 ## ✨ Key Features
 
@@ -33,7 +34,6 @@ The system is built on a **Grounding & Safety First** architecture: rather than 
 | **Secure PostgreSQL Auth** | JWT session authentication with `bcrypt` password hashing, role management, and SMTP OTP email recovery |
 | **Containerized Deployment** | Docker & Docker Compose setup supported by a production Makefile using the modern `uv` Python package manager |
 
----
 ---
 
 ## ⚡ Quick Start
@@ -178,7 +178,6 @@ All backend API routes are prefixed with `/api/`.
 | [`Makefile`](file:///d:/Downloads/medical-bot-main/medical-bot-main/Makefile) | Enterprise Makefile providing `install`, `test`, `lint`, `format`, `check`, and `docker` targets |
 | [`docker-compose.yml`](file:///d:/Downloads/medical-bot-main/medical-bot-main/docker-compose.yml) | Multi-container Docker configuration for backend server and PostgreSQL data volumes |
 
----
 ---
 
 ## ⚠️ Medical Disclaimer
