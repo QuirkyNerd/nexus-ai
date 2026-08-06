@@ -36,7 +36,7 @@ The system is built on a Grounding & Safety First architecture: rather than rely
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Getting Started
 
 ### Prerequisites
 - **Node.js**: `>= 18.17.0`
